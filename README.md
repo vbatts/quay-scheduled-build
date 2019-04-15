@@ -36,16 +36,13 @@ IMO these permissions are way too excessive, but it's the minimum set I could ge
       "schedule": "* */1 * * *",
       "token": "asdfasdfasdfasdfasdfasdf",
       "pull_robot": "ohman+dat_robot_tho",
-      "tags": [
+      "docker_tags": [
         "master",
-	"latest"
+        "latest"
       ],
-      "ref": {
-        "archive_url": "https://github.com/knative/build-templates/archive/master.tar.gz",
-	"dockerfile_path": "/build-templates-master/buildah/Dockerfile",
-	"subdirectory": "/build-templates-master/buildah/",
-        "context": "/build-templates-master/buildah/"
-      }
+      "archive_url": "https://github.com/knative/build-templates/archive/master.tar.gz",
+      "dockerfile_path": "/build-templates-master/buildah/Dockerfile",
+      "subdirectory": "/build-templates-master/buildah/"
     }
   ]
 }
