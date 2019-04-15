@@ -18,11 +18,11 @@ This simple service uses the swagger API, and attempts to make this process easi
 - a quay account
 - a robot account for the org (with 'write' permissions for the repo you want to be able to build)
 - an 'oauth app' token, with at least the permissions:
-  - Administer Organization
-  - Administer Repositories
-  - Create Repositories
-  - View all visible repositories
-  - Read/Write to any accessible repositories
+  - Administer Organization (`org:admin`)
+  - Administer Repositories (`repo:admin`)
+  - Create Repositories (`repo:create`)
+  - View all visible repositories (`repo:read`)
+  - Read/Write to any accessible repositories (`repo:write`)
 
 IMO these permissions are way too excessive, but it's the minimum set I could get working (as of 2019-04).
 
