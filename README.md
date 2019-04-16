@@ -146,3 +146,11 @@ INFO[0000] running the build scheduler ...
 INFO[0299] {"archive_url":"https://github.com/knative/build-templates/archive/master.tar.gz","context":"/build-templates-master/buildah","display_name":"b778aca","dockerfile_path":"/build-templates-master/buildah/Dockerfile","error":null,"id":"c5d94e76-dc0f-4d3a-b8e7-0123c3ddc31d","is_writer":true,"manual_user":"vbatts","phase":"waiting","pull_robot":{"is_robot":true,"kind":"user","name":"ohman+buildahbot"},"repository":{"name":"buildah","namespace":"ohman"},"resource_key":null,"started":"Tue, 16 Apr 2019 17:48:09 -0000","status":{},"subdirectory":"/build-templates-master/buildah/Dockerfile","tags":["latest","master"],"trigger":null,"trigger_metadata":{}}
 ```
 
+## environment variables
+
+Setting `BUILD_COMMAND=` environment variable is useful for running the container image (`quay.io/vbatts/quay-scheduled-build`), since it has a fixed entrypoint.
+The values supported here:
+- `serve`
+- `oneshot`
+
+Further, each of the sub commands have environment variables for their flag values.
