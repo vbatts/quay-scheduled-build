@@ -1,5 +1,7 @@
 # quay-scheduled-build
 
+[![Docker Repository on Quay](https://quay.io/repository/vbatts/quay-scheduled-build/status "Docker Repository on Quay")](https://quay.io/repository/vbatts/quay-scheduled-build)
+
 deploy an app to enforce scheduled builds on quay.io
 
 ## overview
@@ -29,6 +31,15 @@ IMO these permissions are way too excessive, but it's the minimum set I could ge
 - https://quay.io/ to sign up for your account (there is a free plan)
 - https://docs.quay.io/api/ has some information on setting up Oauth2 tokens
 - https://docs.quay.io/glossary/robot-accounts.html on robot accounts
+
+## container available
+
+There is a container build of this project available at https://quay.io/repository/vbatts/quay-scheduled-build
+
+You can `docker|podman pull quay.io/vbatts/quay-scheduled-build`.
+
+Use this to generate your config, run oneshot or as a server.
+
 
 ## config
 
