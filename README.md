@@ -47,10 +47,10 @@ OPTIONS:
    --subdirectory value     path (within the source archive) to the root of the build directory [$BUILD_SUBDIRECTORY]
 ```
 
-So it accepts both flags or environment variables:
+It accepts both flags or environment variables:
 ```shell
 BUILD_ARCHIVE_URL="https://github.com/knative/build-templates/archive/master.tar.gz" \
-  BUILD_DOCKERFILE_PATH="/build-templates-master/buildah/Dockerfile" \
+BUILD_DOCKERFILE_PATH="/build-templates-master/buildah/Dockerfile" \
   quay-scheduled-build \
   generate config \
   --token=asdfasdfasdf \

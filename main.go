@@ -32,8 +32,25 @@ func main() {
 			},
 		},
 		{
+			Name:        "oneshot",
+			Aliases:     []string{"o"},
+			Usage:       "trigger the builds right meow",
+			Description: "trigger your builds on quay.io right meow",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "config",
+					Usage: "build config to manage",
+					Value: "quay-build.json",
+				},
+			},
+			Action: func(c *cli.Context) error {
+				cli.ShowCommandHelpAndExit(c, "oneshot", 1)
+				return nil
+			},
+		},
+		{
 			Name:        "generate",
-			Aliases:     []string{"g", "gen"},
+			Aliases:     []string{"gen", "g"},
 			Usage:       "generate output",
 			Description: "helper to produce config output",
 			Flags:       []cli.Flag{},
@@ -113,8 +130,7 @@ func main() {
 				},
 			},
 			Action: func(c *cli.Context) error {
-				cli.ShowCommandHelpAndExit(c, "generate", 1)
-				return nil
+				return cli.ShowSubcommandHelp(c)
 			},
 		},
 	}
