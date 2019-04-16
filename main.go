@@ -97,6 +97,7 @@ func main() {
 					return cli.NewExitError(errwrap.Wrapf("config file error: {{err}}", err), 1)
 				}
 				defer fh.Close()
+				logrus.Infof("reading config from %q", c.String("config"))
 				dec := json.NewDecoder(fh)
 				cfg := types.Config{}
 				err = dec.Decode(&cfg)
@@ -105,6 +106,7 @@ func main() {
 				}
 
 				for i, bldinfo := range cfg.Builds {
+					logrus.Infof("requesting imediate build of %q", bldinfo.QuayRepo)
 					resp, err := quay.BuildRequest(bldinfo)
 					if err != nil {
 						return cli.NewExitError(errwrap.Wrapf(fmt.Sprintf("[%i] BuildRequest error: {{err}}", i), err), 1)
@@ -145,11 +147,12 @@ func main() {
 							Name:   "schedule",
 							Usage:  "cron style schedule to trigger this containter build (more info https://godoc.org/github.com/robfig/cron#hdr-CRON_Expression_Format)",
 							EnvVar: "BUILD_SCHEDULE",
-							Value:  "* * */1 * *",
+							Value:  "@weekly",
 						},
 						cli.StringSliceFlag{
-							Name:  "tags",
-							Usage: "container name tags to apply to this build",
+							Name:   "tags",
+							Usage:  "container name tags to apply to this build",
+							EnvVar: "BUILD_TAG",
 						},
 						cli.StringFlag{
 							Name:   "robot",

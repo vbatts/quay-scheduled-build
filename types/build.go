@@ -2,9 +2,9 @@ package types
 
 // Build is the configuration for a scheduled build on quay.io
 type Build struct {
-	QuayRepo string `json:"quay_repo"` // org/repo on quay
-	Schedule string `json:"schedule"`  // cron style schedule
-	Token    string `json:"token"`     // quay oauth secret
+	QuayRepo string `json:"quay_repo"`         // org/repo on quay
+	Schedule string `json:"schedule,omitempy"` // cron style schedule
+	Token    string `json:"token"`             // quay oauth secret
 	BuildRef        // inherit the quay structure needed pass as the body
 }
 

@@ -26,6 +26,10 @@ This simple service uses the swagger API, and attempts to make this process easi
 
 IMO these permissions are way too excessive, but it's the minimum set I could get working (as of 2019-04).
 
+- https://quay.io/ to sign up for your account (there is a free plan)
+- https://docs.quay.io/api/ has some information on setting up Oauth2 tokens
+- https://docs.quay.io/glossary/robot-accounts.html on robot accounts
+
 ## config
 
 There is a config helper:
@@ -77,5 +81,57 @@ BUILD_DOCKERFILE_PATH="/build-templates-master/buildah/Dockerfile" \
     }
   ]
 }
+```
+
+## oneshot
+
+You may just want to kick the build(s) imediately.
+So `quay-scheduled-build oneshot` uses the same config file, but does not need the `schedule` field.
+
+```shell
+NAME:
+   main oneshot - trigger the builds right meow
+
+USAGE:
+   main oneshot [command options] [arguments...]
+
+DESCRIPTION:
+   trigger your builds on quay.io right meow.
+  If there are multiple builds in your config, they are triggered in serial.
+
+OPTIONS:
+   --config value  build config to manage (default: "quay-build.json")
+```
+
+```shell
+INFO[0000] reading config from "quay-build.json"        
+INFO[0000] requesting imediate build of "ohman/buildah" 
+INFO[0000] {"archive_url":"https://github.com/knative/build-templates/archive/master.tar.gz","context":"/build-templates-master/buildah","display_name":"b778aca","dockerfile_path":"/build-templates-master/buildah/Dockerfile","error":null,"id":"075e22ce-d6fa-4b19-9d5a-10c5b1f88a6e","is_writer":true,"manual_user":"vbatts","phase":"waiting","pull_robot":{"is_robot":true,"kind":"user","name":"ohman+buildahbot"},"repository":{"name":"buildah","namespace":"ohman"},"resource_key":null,"started":"Tue, 16 Apr 2019 17:51:26 -0000","status":{},"subdirectory":"/build-templates-master/buildah/Dockerfile","tags":["latest","master"],"trigger":null,"trigger_metadata":{}} 
+```
+
+## serve
+
+Run as a daemon to trigger the container builds on quay based on their own schedule.
+See https://godoc.org/github.com/robfig/cron for particulars on the `schedule` syntax.
+
+```shell
+NAME:
+   main serve - the build scheduler
+
+USAGE:
+   main serve [command options] [arguments...]
+
+DESCRIPTION:
+   run the scheduler for your builds on quay.io
+
+OPTIONS:
+   --config value  build config to manage (default: "quay-build.json")
+```
+
+```shell
+INFO[0000] readying the scheduler ...                   
+INFO[0000] queuing build of "ohman/buildah" for "@weekly" 
+INFO[0000] running the build scheduler ...              
+INFO[0299] {"archive_url":"https://github.com/knative/build-templates/archive/master.tar.gz","context":"/build-templates-master/buildah","display_name":"b778aca","dockerfile_path":"/build-templates-master/buildah/Dockerfile","error":null,"id":"c5d94e76-dc0f-4d3a-b8e7-0123c3ddc31d","is_writer":true,"manual_user":"vbatts","phase":"waiting","pull_robot":{"is_robot":true,"kind":"user","name":"ohman+buildahbot"},"repository":{"name":"buildah","namespace":"ohman"},"resource_key":null,"started":"Tue, 16 Apr 2019 17:48:09 -0000","status":{},"subdirectory":"/build-templates-master/buildah/Dockerfile","tags":["latest","master"],"trigger":null,"trigger_metadata":{}}
 ```
 
