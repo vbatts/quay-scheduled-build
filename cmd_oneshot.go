@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/hashicorp/errwrap"
@@ -20,24 +22,39 @@ var cmdOneshot = cli.Command{
 	Flags: []cli.Flag{
 		cli.StringFlag{
 			Name:   "config",
-			Usage:  "build config to manage",
+			Usage:  "configuration for your builds",
 			Value:  "quay-build.json",
 			EnvVar: "BUILD_CONFIG_FILE",
+		},
+		cli.StringFlag{
+			Name:   "config-json",
+			Usage:  "full JSON blob of your build configuration (if provided this takes precedence)",
+			EnvVar: "BUILD_CONFIG",
 		},
 	},
 	Action: cmdOneshotAction,
 }
 
 func cmdOneshotAction(c *cli.Context) error {
-	fh, err := os.Open(c.String("config"))
-	if err != nil {
-		return cli.NewExitError(errwrap.Wrapf("config file error: {{err}}", err), 1)
+	var rdr io.Reader
+
+	if c.String("config-json") != "" {
+		rdr = bytes.NewBufferString(c.String("config-json"))
+		logrus.Infof("reading config from BUILD_CONFIG")
+	} else {
+		fh, err := os.Open(c.String("config"))
+		if err != nil {
+			return cli.NewExitError(errwrap.Wrapf("config file error: {{err}}", err), 1)
+		}
+		defer fh.Close()
+
+		rdr = fh
+		logrus.Infof("reading config from %q", c.String("config"))
 	}
-	defer fh.Close()
-	logrus.Infof("reading config from %q", c.String("config"))
-	dec := json.NewDecoder(fh)
+
+	dec := json.NewDecoder(rdr)
 	cfg := types.Config{}
-	err = dec.Decode(&cfg)
+	err := dec.Decode(&cfg)
 	if err != nil {
 		return cli.NewExitError(errwrap.Wrapf("config parse error: {{err}}", err), 1)
 	}

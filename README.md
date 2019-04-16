@@ -153,4 +153,7 @@ The values supported here:
 - `serve`
 - `oneshot`
 
+This coupled with `BUILD_CONFIG` environment variable, where the whole of the JSON configuration can be provided in environment variable as well, makes for an easy scheduled oneshot or longer running service on something like kubernetes or openshift.
+
+
 Further, each of the sub commands have environment variables for their flag values.
