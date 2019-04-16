@@ -8,4 +8,5 @@ RUN go version && \
 
 FROM scratch
 COPY --from=build /go/bin/quay-scheduled-build /quay-scheduled-build
+USER 1000
 ENTRYPOINT ["/quay-scheduled-build"]
