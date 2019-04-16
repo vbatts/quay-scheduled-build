@@ -56,7 +56,7 @@ func main() {
 						err = sched.AddFunc(bldinfo.Schedule, func() {
 							resp, err := quay.BuildRequest(bldinfo)
 							if err != nil {
-								logrus.Fatal(errwrap.Wrapf(fmt.Sprintf("[%i] BuildRequest error: {{err}}", i), err))
+								logrus.Fatal(errwrap.Wrapf(fmt.Sprintf("[%d] BuildRequest error: {{err}}", i), err))
 							}
 							buf, err := json.Marshal(resp)
 							if err != nil {
@@ -66,7 +66,7 @@ func main() {
 							logrus.Info(string(buf))
 						})
 						if err != nil {
-							return cli.NewExitError(errwrap.Wrapf(fmt.Sprintf("Scheduling error: {{err}}", i), err), 1)
+							return cli.NewExitError(errwrap.Wrapf("Scheduling error: {{err}}", err), 1)
 						}
 					}
 				}
@@ -109,7 +109,7 @@ func main() {
 					logrus.Infof("requesting imediate build of %q", bldinfo.QuayRepo)
 					resp, err := quay.BuildRequest(bldinfo)
 					if err != nil {
-						return cli.NewExitError(errwrap.Wrapf(fmt.Sprintf("[%i] BuildRequest error: {{err}}", i), err), 1)
+						return cli.NewExitError(errwrap.Wrapf(fmt.Sprintf("[%d] BuildRequest error: {{err}}", i), err), 1)
 					}
 					buf, err := json.Marshal(resp)
 					if err != nil {
