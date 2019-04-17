@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 
+	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
 
@@ -40,6 +41,10 @@ func cmdMainAction(c *cli.Context) error {
 		return cmdServe.Run(c)
 	case "oneshot":
 		return cmdOneshot.Run(c)
+	default:
+		if bc := os.Getenv("BUILD_COMMAND"); bc != "" {
+			logrus.Warnf("unknown BUILD_COMMAND: %q", bc)
+		}
 	}
 	cli.ShowAppHelpAndExit(c, 1)
 	return nil
